@@ -1,7 +1,7 @@
 name: Cloudmersive Anti-Virus
 type: module
 description: 'Automatic scanning of file uploads using the Cloudmersive Anti-virus APIs.'
-package: = Anti-virus
+package: Anti-virus
 # core: 8.x
 configure: cloudmersiveantivirus.admin_display
 

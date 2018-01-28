@@ -55,7 +55,7 @@ class CloudmersiveAntivirusConfigForm extends ConfigFormBase {
         //Config::MODE_UNIX_SOCKET => $this->t('Daemon mode (over Unix socket)')
       ),
       '#default_value' => $config->get('scan_mode'),
-      '#description' => $this->t("Configure how Drupal connects to Cloudmersive Anti-virus."),
+      '#description' => $this->t("Configure how Drupal connects to Cloudmersive Anti-virus. <a href='https://account.cloudmersive.com/signup'>Get key now</a>"),
     );
 
 
