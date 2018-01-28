@@ -52,7 +52,7 @@ class Executable implements ScannerInterface {
 
 //$cFile = curl_file_create($filename);
 
-\Drupal::logger('Cloudmersive Antivirus')->warning("File: " . $filename  );
+//\Drupal::logger('Cloudmersive Antivirus')->warning("File: " . $filename  );
 
 
 $curl = curl_init();
