@@ -132,11 +132,14 @@ else
    * {@inheritdoc}
    */
   public function version() {
-    if (file_exists($this->_executable_path)) {
-      return exec(escapeshellcmd($this->_executable_path) . ' -V');
-    }
-    else {
-      return NULL;
-    }
+  
+  	return "1";
+  
+    // if (file_exists($this->_executable_path)) {
+      // return exec(escapeshellcmd($this->_executable_path) . ' -V');
+    // }
+    // else {
+      // return NULL;
+    // }
   }
 }
