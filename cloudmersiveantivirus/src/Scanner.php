@@ -162,14 +162,14 @@ class Scanner {
       // Log every infected file.
       case self::FILE_IS_INFECTED:
         $message = 'Virus %virusname detected in uploaded file %filename.';
-        \Drupal::logger('Clam AV')->error($message, $replacements);
+        \Drupal::logger('Cloudmersive Antivirus')->error($message, $replacements);
         break;
 
       // Log clean files if verbose mode is enabled.
       case self::FILE_IS_CLEAN:
         if ($verbose_mode) {
           $message = 'Uploaded file %filename checked and found clean.';
-          \Drupal::logger('Clam AV')->info($message, $replacements);
+          \Drupal::logger('Cloudmersive Antivirus')->info($message, $replacements);
         }
         break;
 
@@ -177,11 +177,11 @@ class Scanner {
       case self::FILE_IS_UNCHECKED:
         if ($this->config->outage_action() === Config::OUTAGE_ALLOW_UNCHECKED) {
           $message = 'Uploaded file %filename could not be checked, and was uploaded without checking.';
-          \Drupal::logger('Clam AV')->notice($message, $replacements);
+          \Drupal::logger('Cloudmersive Antivirus')->notice($message, $replacements);
         }
         elseif ($verbose_mode) {
           $message = 'Uploaded file %filename could not be checked, and was deleted.';
-          \Drupal::logger('Clam AV')->info($message, $replacements);
+          \Drupal::logger('Cloudmersive Antivirus')->info($message, $replacements);
         }
         break;
     }

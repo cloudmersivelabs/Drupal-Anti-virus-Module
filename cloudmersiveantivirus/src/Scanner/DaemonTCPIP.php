@@ -31,7 +31,7 @@ class DaemonTCPIP implements ScannerInterface {
 
     // Abort if the CloudmersiveAntivirus server is unavailable.
     if (!$scanner_handler) {
-      \Drupal::logger('Clam AV')->warning('Unable to connect to Cloudmersive Antivirus TCP/IP daemon on @hostname:@port', array('@hostname' => $this->_hostname, '@port' => $this->_port));
+      \Drupal::logger('Cloudmersive Antivirus')->warning('Unable to connect to Cloudmersive Antivirus TCP/IP daemon on @hostname:@port', array('@hostname' => $this->_hostname, '@port' => $this->_port));
       return Scanner::FILE_IS_UNCHECKED;
     }
 
@@ -83,7 +83,7 @@ class DaemonTCPIP implements ScannerInterface {
   public function version() {
     $handler = @fsockopen($this->_hostname, $this->_port);
     if (!$handler) {
-      \Drupal::logger('Clam AV')->warning('Unable to connect to Cloudmersive Antivirus TCP/IP daemon on @hostname:@port', array('@hostname' => $this->_hostname, '@port' => $this->_port));
+      \Drupal::logger('Cloudmersive Antivirus')->warning('Unable to connect to Cloudmersive Antivirus TCP/IP daemon on @hostname:@port', array('@hostname' => $this->_hostname, '@port' => $this->_port));
       return NULL;
     }
 

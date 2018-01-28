@@ -35,7 +35,7 @@ function cloudmersiveantivirus_file_validate(Drupal\file\FileInterface $file) {
   $scanner = \Drupal::service('cloudmersiveantivirus');
   if ($scanner->isEnabled() && $scanner->isScannable($file)) {
     if ($scanner->isVerboseModeEnabled()) {
-      \Drupal::logger('Clam AV')->debug('File %filename is scannable.', array('%filename' => $file->getFilename()));
+      \Drupal::logger('Cloudmersive Antivirus')->debug('File %filename is scannable.', array('%filename' => $file->getFilename()));
     }
 
     $result = $scanner->scan($file);
@@ -60,7 +60,7 @@ function cloudmersiveantivirus_file_validate(Drupal\file\FileInterface $file) {
     $replacements = array(
       '%filename' => $file->getFilename(),
     );
-    \Drupal::logger('Clam AV')->info($message, $replacements);
+    \Drupal::logger('Cloudmersive Antivirus')->info($message, $replacements);
   }
 
   return $errors;

@@ -29,7 +29,7 @@ class DaemonUnixSocket implements ScannerInterface {
 
     // Abort if the CloudmersiveAntivirus server is unavailable.
     if (!$scanner_handler) {
-      \Drupal::logger('Clam AV')->warning('Unable to connect to CloudmersiveAntivirus daemon on unix socket @unix_socket', array('@unix_socket' => $this->_unix_socket));
+      \Drupal::logger('Cloudmersive Antivirus')->warning('Unable to connect to CloudmersiveAntivirus daemon on unix socket @unix_socket', array('@unix_socket' => $this->_unix_socket));
       return Scanner::FILE_IS_UNCHECKED;
     }
 
@@ -75,7 +75,7 @@ class DaemonUnixSocket implements ScannerInterface {
   public function version() {
     $handler = @fsockopen("unix://{$this->_unix_socket}", 0);
     if (!$handler) {
-      \Drupal::logger('Clam AV')->warning('Unable to connect to CloudmersiveAntivirus daemon on unix socket @unix_socket', array('@unix_socket' => $this->_unix_socket));
+      \Drupal::logger('Cloudmersive Antivirus')->warning('Unable to connect to CloudmersiveAntivirus daemon on unix socket @unix_socket', array('@unix_socket' => $this->_unix_socket));
       return NULL;
     }
 
