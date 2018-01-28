@@ -1,11 +1,11 @@
 <?php
 
-namespace Drupal\clamav\Scanner;
+namespace Drupal\cloudmersiveantivirus\Scanner;
 
 use Drupal\file\FileInterface;
-use Drupal\clamav\ScannerInterface;
-use Drupal\clamav\Scanner;
-use Drupal\clamav\Config;
+use Drupal\cloudmersiveantivirus\ScannerInterface;
+use Drupal\cloudmersiveantivirus\Scanner;
+use Drupal\cloudmersiveantivirus\Config;
 
 class DaemonUnixSocket implements ScannerInterface {
   protected $_file;
@@ -23,17 +23,17 @@ class DaemonUnixSocket implements ScannerInterface {
    * {@inheritdoc}
    */
   public function scan(FileInterface $file) {
-    // Attempt to open a socket to the ClamAV host and the file.
+    // Attempt to open a socket to the CloudmersiveAntivirus host and the file.
     $file_handler    = fopen($file->getFileUri(), 'r');
     $scanner_handler = @fsockopen("unix://{$this->_unix_socket}", 0);
 
-    // Abort if the ClamAV server is unavailable.
+    // Abort if the CloudmersiveAntivirus server is unavailable.
     if (!$scanner_handler) {
-      \Drupal::logger('Clam AV')->warning('Unable to connect to ClamAV daemon on unix socket @unix_socket', array('@unix_socket' => $this->_unix_socket));
+      \Drupal::logger('Cloudmersive Antivirus')->warning('Unable to connect to CloudmersiveAntivirus daemon on unix socket @unix_socket', array('@unix_socket' => $this->_unix_socket));
       return Scanner::FILE_IS_UNCHECKED;
     }
 
-    // Push to the ClamAV socket.
+    // Push to the CloudmersiveAntivirus socket.
     $bytes = $file->getSize();
     fwrite($scanner_handler, "zINSTREAM\0");
     fwrite($scanner_handler, pack("N", $bytes));
@@ -75,7 +75,7 @@ class DaemonUnixSocket implements ScannerInterface {
   public function version() {
     $handler = @fsockopen("unix://{$this->_unix_socket}", 0);
     if (!$handler) {
-      \Drupal::logger('Clam AV')->warning('Unable to connect to ClamAV daemon on unix socket @unix_socket', array('@unix_socket' => $this->_unix_socket));
+      \Drupal::logger('Cloudmersive Antivirus')->warning('Unable to connect to CloudmersiveAntivirus daemon on unix socket @unix_socket', array('@unix_socket' => $this->_unix_socket));
       return NULL;
     }
 

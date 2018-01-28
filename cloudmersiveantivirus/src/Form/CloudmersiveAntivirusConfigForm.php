@@ -1,39 +1,39 @@
 <?php
 
-namespace Drupal\clamav\Form;
+namespace Drupal\cloudmersiveantivirus\Form;
 
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StreamWrapper\StreamWrapperInterface;
 use Drupal\Core\Url;
 
-use Drupal\clamav\Config;
-use Drupal\clamav\Scanner;
+use Drupal\cloudmersiveantivirus\Config;
+use Drupal\cloudmersiveantivirus\Scanner;
 
 /**
  * Configure file system settings for this site.
  */
-class ClamAVConfigForm extends ConfigFormBase {
+class CloudmersiveAntivirusConfigForm extends ConfigFormBase {
 
   /**
    * {@inheritdoc}
    */
   public function getFormId() {
-    return 'clamav_system_settings';
+    return 'cloudmersiveantivirus_system_settings';
   }
 
   /**
    * {@inheritdoc}
    */
   protected function getEditableConfigNames() {
-    return ['clamav.settings'];
+    return ['cloudmersiveantivirus.settings'];
   }
 
   /**
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    $config = $this->config('clamav.settings');
+    $config = $this->config('cloudmersiveantivirus.settings');
 
     $form['enabled'] = array(
       '#type' => 'checkbox',
@@ -55,12 +55,12 @@ class ClamAVConfigForm extends ConfigFormBase {
         //Config::MODE_UNIX_SOCKET => $this->t('Daemon mode (over Unix socket)')
       ),
       '#default_value' => $config->get('scan_mode'),
-      '#description' => $this->t("Configure how Drupal connects to Cloudmersive Anti-virus.<br />Daemon mode is recommended if the ClamAV service is capable of running as a daemon."),
+      '#description' => $this->t("Configure how Drupal connects to Cloudmersive Anti-virus. <a href='https://account.cloudmersive.com/signup'>Get key now</a>"),
     );
 
 
 
-    // Configuration if ClamAV is set to Executable mode.
+    // Configuration if CloudmersiveAntivirus is set to Executable mode.
     $form['scan_mechanism_wrapper']['mode_executable'] = array(
       '#type' => 'details',
       '#title' => $this->t('Cloudmersive Anti-virus API configuration'),
@@ -76,7 +76,7 @@ class ClamAVConfigForm extends ConfigFormBase {
       '#title' => $this->t('Cloudmersive Anti-virus API Key'),
       '#default_value' => $config->get('mode_executable.executable_path'),
       '#maxlength' => 255,
-      // '#description' => t('The path to the ClamAV executable. Defaults to %default_path.', array('%default_path' => CLAMAV_DEFAULT_PATH)),
+      // '#description' => t('The path to the CloudmersiveAntivirus executable. Defaults to %default_path.', array('%default_path' => CLOUDMERSIVEAV_DEFAULT_PATH)),
     );
  /*   $form['scan_mechanism_wrapper']['mode_executable']['executable_parameters'] = array(
       '#type' => 'textfield',
@@ -87,7 +87,7 @@ class ClamAVConfigForm extends ConfigFormBase {
     );*/
 
 
-    // Configuration if ClamAV is set to Daemon mode.
+    // Configuration if CloudmersiveAntivirus is set to Daemon mode.
     $form['scan_mechanism_wrapper']['mode_daemon_tcpip'] = array(
       '#type' => 'details',
       '#title' => $this->t('Daemon mode configuration (over TCP/IP)'),
@@ -103,7 +103,7 @@ class ClamAVConfigForm extends ConfigFormBase {
       '#title' => $this->t('Cloudmersive API Key'),
       '#default_value' => $config->get('mode_daemon_tcpip.hostname'),
       '#maxlength' => 255,
-      // '#description' => t('The hostname for the ClamAV daemon. Defaults to %default_host.', array('%default_host' => CLAMAV_DEFAULT_HOST)),
+      // '#description' => t('The hostname for the CloudmersiveAntivirus daemon. Defaults to %default_host.', array('%default_host' => CLOUDMERSIVEAV_DEFAULT_HOST)),
     );
 /*    $form['scan_mechanism_wrapper']['mode_daemon_tcpip']['port'] = array(
       '#type' => 'textfield',
@@ -111,11 +111,11 @@ class ClamAVConfigForm extends ConfigFormBase {
       '#default_value' => $config->get('mode_daemon_tcpip.port'),
       '#size' => 6,
       '#maxlength' => 8,
-      // '#description' => t('The port for the ClamAV daemon.  Defaults to port %default_port.  Must be between 1 and 65535.', array('%default_port' => CLAMAV_DEFAULT_PORT)),
+      // '#description' => t('The port for the CloudmersiveAntivirus daemon.  Defaults to port %default_port.  Must be between 1 and 65535.', array('%default_port' => CLOUDMERSIVEAV_DEFAULT_PORT)),
     );*/
 
 
-    // Configuration if ClamAV is set to Daemon mode over Unix socket.
+    // Configuration if CloudmersiveAntivirus is set to Daemon mode over Unix socket.
     $form['scan_mechanism_wrapper']['mode_daemon_unixsocket'] = array(
       '#type' => 'details',
       '#title' => $this->t('Daemon mode configuration (over Unix socket)'),
@@ -131,7 +131,7 @@ class ClamAVConfigForm extends ConfigFormBase {
       '#title' => $this->t('Socket path'),
       '#default_value' => $config->get('mode_daemon_unixsocket.unixsocket'),
       '#maxlength' => 255,
-      // '#description' => t('The unix socket path for the ClamAV daemon. Defaults to %default_socket.', array('%default_socket' => CLAMAV_DEFAULT_UNIX_SOCKET)),
+      // '#description' => t('The unix socket path for the CloudmersiveAntivirus daemon. Defaults to %default_socket.', array('%default_socket' => CLOUDMERSIVEAV_DEFAULT_UNIX_SOCKET)),
     );
 
     $form['outage_actions_wrapper'] = array(
@@ -141,7 +141,7 @@ class ClamAVConfigForm extends ConfigFormBase {
     );
     $form['outage_actions_wrapper']['outage_action'] = array(
       '#type' => 'radios',
-      '#title' => $this->t('Behaviour when ClamAV is unavailable'),
+      '#title' => $this->t('Behaviour when Cloudmersive Antivirus API is unavailable'),
       '#options' => array(
         Config::OUTAGE_BLOCK_UNCHECKED => $this->t('Block unchecked files'),
         Config::OUTAGE_ALLOW_UNCHECKED => $this->t('Allow unchecked files'),
@@ -164,7 +164,7 @@ class ClamAVConfigForm extends ConfigFormBase {
     $remote_schemes = $this->scheme_wrappers_available('remote');
 
     if (count($local_schemes)) {
-      $form['schemes']['clamav_local_schemes'] = array(
+      $form['schemes']['cloudmersiveantivirus_local_schemes'] = array(
         '#type' => 'checkboxes',
         '#title' => $this->t('Local schemes'),
         '#options' => $local_schemes,
@@ -172,7 +172,7 @@ class ClamAVConfigForm extends ConfigFormBase {
       );
     }
     if (count($remote_schemes)) {
-      $form['schemes']['clamav_remote_schemes'] = array(
+      $form['schemes']['cloudmersiveantivirus_remote_schemes'] = array(
         '#type' => 'checkboxes',
         '#title' => $this->t('Remote schemes'),
         '#options' => $remote_schemes,
@@ -189,7 +189,7 @@ class ClamAVConfigForm extends ConfigFormBase {
     $form['verbosity_wrapper']['verbosity'] = array(
       '#type' => 'checkbox',
       '#title' => $this->t('Verbose'),
-      '#description' => $this->t('Verbose mode will log all scanned files, including files which pass the ClamAV scan.'),
+      '#description' => $this->t('Verbose mode will log all scanned files, including files which pass the Cloudmersive Antivirus scan.'),
       '#default_value' => $config->get('verbosity'),
     );
 
@@ -216,18 +216,18 @@ class ClamAVConfigForm extends ConfigFormBase {
 
     // Configure the stream-wrapper schemes that are overridden.
     // Local schemes behave differently to remote schemes.
-    $local_schemes_to_scan  = (is_array($form_state->getValue('clamav_local_schemes')))
-      ? array_filter($form_state->getValue('clamav_local_schemes'))
+    $local_schemes_to_scan  = (is_array($form_state->getValue('cloudmersiveantivirus_local_schemes')))
+      ? array_filter($form_state->getValue('cloudmersiveantivirus_local_schemes'))
       : array();
-    $remote_schemes_to_scan  = (is_array($form_state->getValue('clamav_remote_schemes')))
-      ? array_filter($form_state->getValue('clamav_remote_schemes'))
+    $remote_schemes_to_scan  = (is_array($form_state->getValue('cloudmersiveantivirus_remote_schemes')))
+      ? array_filter($form_state->getValue('cloudmersiveantivirus_remote_schemes'))
       : array();
     $overridden_schemes = array_merge(
       $this->get_overridden_schemes('local',  $local_schemes_to_scan),
       $this->get_overridden_schemes('remote', $remote_schemes_to_scan)
     );
 
-    $this->config('clamav.settings')
+    $this->config('cloudmersiveantivirus.settings')
       ->set('enabled', $form_state->getValue('enabled'))
       ->set('outage_action', $form_state->getValue('outage_action'))
       ->set('overridden_schemes', $overridden_schemes)
@@ -305,7 +305,7 @@ class ClamAVConfigForm extends ConfigFormBase {
         break;
     }
 
-    return array_filter($schemes, array('\Drupal\clamav\Scanner', 'isSchemeScannable'));
+    return array_filter($schemes, array('\Drupal\cloudmersiveantivirus\Scanner', 'isSchemeScannable'));
   }
 
   /**

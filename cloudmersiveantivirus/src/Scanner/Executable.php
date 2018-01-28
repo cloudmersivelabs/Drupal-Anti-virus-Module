@@ -1,11 +1,11 @@
 <?php
 
-namespace Drupal\clamav\Scanner;
+namespace Drupal\cloudmersiveantivirus\Scanner;
 
 use Drupal\file\FileInterface;
-use Drupal\clamav\ScannerInterface;
-use Drupal\clamav\Scanner;
-use Drupal\clamav\Config;
+use Drupal\cloudmersiveantivirus\ScannerInterface;
+use Drupal\cloudmersiveantivirus\Scanner;
+use Drupal\cloudmersiveantivirus\Config;
 
 class Executable implements ScannerInterface {
   private $_executable_path = '';
@@ -27,11 +27,11 @@ class Executable implements ScannerInterface {
   public function scan(FileInterface $file) {
     // Verify that the executable exists.
 /*    if (!file_exists($this->_executable_path)) {
-      \Drupal::logger('Clam AV')->warning('Unable to find ClamAV executable at @executable_path', array('@executable_path' => $this->_executable_path));
+      \Drupal::logger('Cloudmersive Antivirus')->warning('Unable to find CloudmersiveAntivirus executable at @executable_path', array('@executable_path' => $this->_executable_path));
       return Scanner::FILE_IS_UNCHECKED;
     }*/
 
-    // Redirect STDERR to STDOUT to capture the full output of the ClamAV script.
+    // Redirect STDERR to STDOUT to capture the full output of the CloudmersiveAntivirus script.
     $script = "{$this->_executable_path} {$this->_executable_parameters}";
     $filename = drupal_realpath($file->getFileUri());
     $cmd = escapeshellcmd($script) . ' ' . escapeshellarg($filename) . ' 2>&1';
@@ -52,10 +52,12 @@ class Executable implements ScannerInterface {
 
 //$cFile = curl_file_create($filename);
 
-\Drupal::logger('Clam AV')->warning("File: " . $filename  );
+//\Drupal::logger('Cloudmersive Antivirus')->warning("File: " . $filename  );
 
 
 $curl = curl_init();
+
+$key = $this->_executable_path;
 
 curl_setopt_array($curl, array(
   CURLOPT_URL => "https://api.cloudmersive.com/virus/scan/file",
@@ -67,7 +69,7 @@ curl_setopt_array($curl, array(
   CURLOPT_CUSTOMREQUEST => "POST",
   CURLOPT_HTTPHEADER => array(
     "cache-control: no-cache",
-    "Apikey: 14343416-776b-40e8-b6d7-6ffaa0bd70f9",
+    "Apikey: " . $key,
     "content-type: application/x-www-form-urlencoded"
   ),
   CURLOPT_POSTFIELDS => array(
@@ -88,17 +90,17 @@ if ($err) {
 
 $strResponse = (string) $response;
 
-//\Drupal::logger('Clam AV')->warning("Got response: " . $strResponse . "Err: " . $err  );
+//\Drupal::logger('Cloudmersive Antivirus')->warning("Got response: " . $strResponse . "Err: " . $err  );
 
 
 
 if (strpos($strResponse, '"CleanResult":true') !== false) {
-	// \Drupal::logger('Clam AV')->warning("Scanned uploaded file, clean result."  );
+	// \Drupal::logger('Cloudmersive Antivirus')->warning("Scanned uploaded file, clean result."  );
     return Scanner::FILE_IS_CLEAN;
 }
 else
 {
-	//\Drupal::logger('Clam AV')->warning("Scanned uploaded file, INFECTED result - BLOCKED."  );
+	//\Drupal::logger('Cloudmersive Antivirus')->warning("Scanned uploaded file, INFECTED result - BLOCKED."  );
 	return Scanner::FILE_IS_INFECTED;
 }
 

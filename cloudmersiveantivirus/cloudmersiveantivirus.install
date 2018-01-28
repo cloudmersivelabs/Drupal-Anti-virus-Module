@@ -2,17 +2,17 @@
 
 /**
  * @file
- * Install, update and uninstall functions for the clamav module.
+ * Install, update and uninstall functions for the cloudmersiveantivirus module.
  */
 
-use Drupal\clamav\Config;
-use Drupal\clamav\Scanner;
+use Drupal\cloudmersiveantivirus\Config;
+use Drupal\cloudmersiveantivirus\Scanner;
 
 
 /**
  * Implements hook_requirements().
  */
-function clamav_requirements($phase) {
+function cloudmersiveantivirus_requirements($phase) {
   $requirements = array();
   // Report Drupal version
   if ($phase == 'runtime') {
@@ -33,16 +33,16 @@ function clamav_requirements($phase) {
     }
   
     if ($version = $scanner->version()) {
-      $requirements['clamav'] = array(
-        'title' => t('ClamAV version'),
+      $requirements['cloudmersiveantivirus'] = array(
+        'title' => t('CloudmersiveAntivirus version'),
         'value' => $scanner->version(),
         'severity' => REQUIREMENT_INFO,
       );
     }
     else {
-      $requirements['clamav'] = array(
-        'title' => t('ClamAV version'),
-        'value' => t('Unable to connect to ClamAV service.'),
+      $requirements['cloudmersiveantivirus'] = array(
+        'title' => t('CloudmersiveAntivirus version'),
+        'value' => t('Unable to connect to CloudmersiveAntivirus service.'),
         'severity' => REQUIREMENT_ERROR,
       );
     }
