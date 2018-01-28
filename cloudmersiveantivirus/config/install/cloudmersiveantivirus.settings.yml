@@ -3,7 +3,7 @@ enabled: true
 outage_action: 0
 overridden_schemes: []
 # Default scan mode: Daemon (over TCP/IP).
-scan_mode: 0
+scan_mode: 1
 # Default verbosity: quiet.
 verbosity: 0
 
