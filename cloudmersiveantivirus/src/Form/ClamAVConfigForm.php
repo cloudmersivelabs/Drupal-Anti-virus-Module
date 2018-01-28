@@ -189,7 +189,7 @@ class CloudmersiveAntivirusConfigForm extends ConfigFormBase {
     $form['verbosity_wrapper']['verbosity'] = array(
       '#type' => 'checkbox',
       '#title' => $this->t('Verbose'),
-      '#description' => $this->t('Verbose mode will log all scanned files, including files which pass the ClamAV scan.'),
+      '#description' => $this->t('Verbose mode will log all scanned files, including files which pass the Cloudmersive Antivirus scan.'),
       '#default_value' => $config->get('verbosity'),
     );
 
@@ -216,18 +216,18 @@ class CloudmersiveAntivirusConfigForm extends ConfigFormBase {
 
     // Configure the stream-wrapper schemes that are overridden.
     // Local schemes behave differently to remote schemes.
-    $local_schemes_to_scan  = (is_array($form_state->getValue('clamav_local_schemes')))
-      ? array_filter($form_state->getValue('clamav_local_schemes'))
+    $local_schemes_to_scan  = (is_array($form_state->getValue('cloudmersiveantivirus_local_schemes')))
+      ? array_filter($form_state->getValue('cloudmersiveantivirus_local_schemes'))
       : array();
-    $remote_schemes_to_scan  = (is_array($form_state->getValue('clamav_remote_schemes')))
-      ? array_filter($form_state->getValue('clamav_remote_schemes'))
+    $remote_schemes_to_scan  = (is_array($form_state->getValue('cloudmersiveantivirus_remote_schemes')))
+      ? array_filter($form_state->getValue('cloudmersiveantivirus_remote_schemes'))
       : array();
     $overridden_schemes = array_merge(
       $this->get_overridden_schemes('local',  $local_schemes_to_scan),
       $this->get_overridden_schemes('remote', $remote_schemes_to_scan)
     );
 
-    $this->config('clamav.settings')
+    $this->config('cloudmersiveantivirus.settings')
       ->set('enabled', $form_state->getValue('enabled'))
       ->set('outage_action', $form_state->getValue('outage_action'))
       ->set('overridden_schemes', $overridden_schemes)
@@ -305,7 +305,7 @@ class CloudmersiveAntivirusConfigForm extends ConfigFormBase {
         break;
     }
 
-    return array_filter($schemes, array('\Drupal\clamav\Scanner', 'isSchemeScannable'));
+    return array_filter($schemes, array('\Drupal\cloudmersiveantivirus\Scanner', 'isSchemeScannable'));
   }
 
   /**

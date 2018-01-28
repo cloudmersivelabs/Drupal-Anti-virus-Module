@@ -1,11 +1,11 @@
 <?php
 
-namespace Drupal\clamav\Scanner;
+namespace Drupal\cloudmersiveantivirus\Scanner;
 
 use Drupal\file\FileInterface;
-use Drupal\clamav\ScannerInterface;
-use Drupal\clamav\Scanner;
-use Drupal\clamav\Config;
+use Drupal\cloudmersiveantivirus\ScannerInterface;
+use Drupal\cloudmersiveantivirus\Scanner;
+use Drupal\cloudmersiveantivirus\Config;
 
 class DaemonTCPIP implements ScannerInterface {
   protected $_file;
@@ -26,16 +26,16 @@ class DaemonTCPIP implements ScannerInterface {
    */
   public function scan(FileInterface $file) {
 
-    // Attempt to open a socket to the ClamAV host.
+    // Attempt to open a socket to the CloudmersiveAntivirus host.
     $scanner_handler = @fsockopen($this->_hostname, $this->_port);
 
-    // Abort if the ClamAV server is unavailable.
+    // Abort if the CloudmersiveAntivirus server is unavailable.
     if (!$scanner_handler) {
-      \Drupal::logger('Clam AV')->warning('Unable to connect to ClamAV TCP/IP daemon on @hostname:@port', array('@hostname' => $this->_hostname, '@port' => $this->_port));
+      \Drupal::logger('Clam AV')->warning('Unable to connect to Cloudmersive Antivirus TCP/IP daemon on @hostname:@port', array('@hostname' => $this->_hostname, '@port' => $this->_port));
       return Scanner::FILE_IS_UNCHECKED;
     }
 
-    // Push to the ClamAV socket.
+    // Push to the CloudmersiveAntivirus socket.
     $bytes = $file->getSize();
     fwrite($scanner_handler, "zINSTREAM\0");
     fwrite($scanner_handler, pack("N", $bytes));
@@ -83,7 +83,7 @@ class DaemonTCPIP implements ScannerInterface {
   public function version() {
     $handler = @fsockopen($this->_hostname, $this->_port);
     if (!$handler) {
-      \Drupal::logger('Clam AV')->warning('Unable to connect to ClamAV TCP/IP daemon on @hostname:@port', array('@hostname' => $this->_hostname, '@port' => $this->_port));
+      \Drupal::logger('Clam AV')->warning('Unable to connect to Cloudmersive Antivirus TCP/IP daemon on @hostname:@port', array('@hostname' => $this->_hostname, '@port' => $this->_port));
       return NULL;
     }
 

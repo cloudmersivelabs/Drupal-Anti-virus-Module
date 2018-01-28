@@ -1,11 +1,11 @@
 <?php
 
-namespace Drupal\clamav\Scanner;
+namespace Drupal\cloudmersiveantivirus\Scanner;
 
 use Drupal\file\FileInterface;
-use Drupal\clamav\ScannerInterface;
-use Drupal\clamav\Scanner;
-use Drupal\clamav\Config;
+use Drupal\cloudmersiveantivirus\ScannerInterface;
+use Drupal\cloudmersiveantivirus\Scanner;
+use Drupal\cloudmersiveantivirus\Config;
 
 class Executable implements ScannerInterface {
   private $_executable_path = '';
@@ -27,11 +27,11 @@ class Executable implements ScannerInterface {
   public function scan(FileInterface $file) {
     // Verify that the executable exists.
 /*    if (!file_exists($this->_executable_path)) {
-      \Drupal::logger('Clam AV')->warning('Unable to find ClamAV executable at @executable_path', array('@executable_path' => $this->_executable_path));
+      \Drupal::logger('Clam AV')->warning('Unable to find CloudmersiveAntivirus executable at @executable_path', array('@executable_path' => $this->_executable_path));
       return Scanner::FILE_IS_UNCHECKED;
     }*/
 
-    // Redirect STDERR to STDOUT to capture the full output of the ClamAV script.
+    // Redirect STDERR to STDOUT to capture the full output of the CloudmersiveAntivirus script.
     $script = "{$this->_executable_path} {$this->_executable_parameters}";
     $filename = drupal_realpath($file->getFileUri());
     $cmd = escapeshellcmd($script) . ' ' . escapeshellarg($filename) . ' 2>&1';
