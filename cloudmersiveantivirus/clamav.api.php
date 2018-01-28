@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Hooks provided by the ClamAV module.
+ * Hooks provided by the CloudmersiveAntivirus module.
  */
 
 /**
@@ -11,7 +11,7 @@
  */
 
 /**
- * Alter whether a file should be scanned by the ClamAV anti-virus scanner.
+ * Alter whether a file should be scanned by the CloudmersiveAntivirus anti-virus scanner.
  *
  * By default, all files are considered scannable.
  *
@@ -50,14 +50,14 @@
  *   The file to scan.
  *
  * @return int|null
- *   - Drupal\clamav\Scanner::FILE_IS_SCANNABLE
+ *   - Drupal\CloudmersiveAntivirus\Scanner::FILE_IS_SCANNABLE
  *     File should be scanned.
- *   - Drupal\clamav\Scanner::FILE_IS_NOT_SCANNABLE
+ *   - Drupal\CloudmersiveAntivirus\Scanner::FILE_IS_NOT_SCANNABLE
  *     File should not be scanned.
- *   - Drupal\clamav\Scanner::FILE_SCANNABLE_IGNORE
+ *   - Drupal\CloudmersiveAntivirus\Scanner::FILE_SCANNABLE_IGNORE
  *     This module does not wish to affect the scannability of this file.
  */
-function hook_clamav_file_is_scannable(Drupal\file\FileInterface $file) {
+function hook_cloudmersiveantivirus_file_is_scannable(Drupal\file\FileInterface $file) {
   // Don't scan image files.
   if ($mime_type = $file->getMimeType()) {
     if (strpos($mime_type, '/') && list($classification) = explode('/', $mime_type)) {
