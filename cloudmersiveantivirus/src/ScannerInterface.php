@@ -1,9 +1,9 @@
 <?php
 
-namespace Drupal\clamav;
+namespace Drupal\cloudmersiveantivirus;
 
 use Drupal\file\FileInterface;
-use Drupal\clamav\Config;
+use Drupal\cloudmersiveantivirus\Config;
 
 /**
  * Provides an interface defining a menu entity.
@@ -13,7 +13,7 @@ interface ScannerInterface {
   /**
    * Constructor.
    *
-   * @param Drupal\clamav\Config $config
+   * @param Drupal\cloudmersiveantivirus\Config $config
    *   Configuration to use.
    */
   public function __construct(Config $config);
@@ -32,10 +32,10 @@ interface ScannerInterface {
   public function scan(FileInterface $file);
 
   /**
-   * The version of the ClamAV service.
+   * The version of the CloudmersiveAntivirus service.
    *
    * @return string
-   *   The version number provided by ClamAV.
+   *   The version number provided by CloudmersiveAntivirus.
    */
   public function version();
 }

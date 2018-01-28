@@ -29,7 +29,7 @@ class Scanner {
   // Instance of a scanner class, implementing ScannerInterface.
   protected $scanner = NULL;
 
-  // ClamAV configuration.
+  // CloudmersiveAntivirus configuration.
   protected $config = NULL;
 
   /**
@@ -88,7 +88,7 @@ class Scanner {
 
 
   /**
-   * Check whether a specific file should be scanned by ClamAV.
+   * Check whether a specific file should be scanned by CloudmersiveAntivirus.
    *
    * Specific files can be excluded from anti-virus scanning, such as:
    * - Image files
@@ -97,9 +97,9 @@ class Scanner {
    * - Viruses, intended to be deliberately uploaded to a virus database
    *
    * Files can be excluded from the scans by implementing
-   * hook_clamav_file_is_scannable().
+   * hook_cloudmersiveantivirus_file_is_scannable().
    *
-   * @see hook_clamav_file_is_scannable().
+   * @see hook_cloudmersiveantivirus_file_is_scannable().
    *
    * @return boolean
    *    TRUE if a file should be scanned by the anti-virus service.
@@ -114,11 +114,11 @@ class Scanner {
     }
     $scannable = self::isSchemeScannable($scheme);
 
-    // Iterate each module implementing hook_clamav_file_is_scannable().
+    // Iterate each module implementing hook_cloudmersiveantivirus_file_is_scannable().
     // Modules that do not wish to affact the result should return
     // FILE_SCANNABLE_IGNORE.
-    foreach (\Drupal::moduleHandler()->getImplementations('clamav_file_is_scannable') as $module) {
-      $result = \Drupal::moduleHandler()->invoke($module, 'clamav_file_is_scannable', array($file));
+    foreach (\Drupal::moduleHandler()->getImplementations('cloudmersiveantivirus_file_is_scannable') as $module) {
+      $result = \Drupal::moduleHandler()->invoke($module, 'cloudmersiveantivirus_file_is_scannable', array($file));
       if ($result !== self::FILE_SCANNABLE_IGNORE) {
         $scannable = $result;
       }
@@ -136,11 +136,11 @@ class Scanner {
    *
    * @return int
    *   One of the following class constants:
-   *   - CLAMAV_SCANRESULT_UNCHECKED
-   *     The file was not scanned. The ClamAV service may be unavailable.
-   *   - CLAMAV_SCANRESULT_CLEAN
+   *   - CLOUDMERSIVEAV_SCANRESULT_UNCHECKED
+   *     The file was not scanned. The CloudmersiveAntivirus service may be unavailable.
+   *   - CLOUDMERSIVEAV_SCANRESULT_CLEAN
    *     The file was scanned, and no infection was found.
-   *   - CLAMAV_SCANRESULT_INFECTED
+   *   - CLOUDMERSIVEAV_SCANRESULT_INFECTED
    *     The file was scanned, and found to be infected with a virus.
    */
   public function scan(FileInterface $file) {
@@ -189,10 +189,10 @@ class Scanner {
   }
 
   /**
-   * The version of the ClamAV service.
+   * The version of the CloudmersiveAntivirus service.
    *
    * @return string
-   *   The version number provided by ClamAV.
+   *   The version number provided by CloudmersiveAntivirus.
    */
   public function version() {
     return $this->scanner->version();
@@ -219,7 +219,7 @@ class Scanner {
     $scheme_is_local = in_array($scheme, $local_schemes);
 
     // The default can be overridden per scheme.
-    $config = \Drupal::config('clamav.settings');
+    $config = \Drupal::config('cloudmersiveantivirus.settings');
     $overridden_schemes = $config->get('overridden_schemes');
     $scheme_is_overridden = in_array($scheme, $overridden_schemes);
 
