@@ -17,13 +17,10 @@ Sign up for a free API key at https://cloudmersive.com - free keys include 50,00
 Setup
 -----
 
-- Install a ClamAV service.
-  For example: `sudo apt-get install clamav-daemon`
+- Get a Cloudmersive API key at https://cloudmersive.com
 
 - Enable this module.
 
-- Configure the module at /admin/config/media/clamav.
-  The unix-socket daemon mode is quickest, but the ClamAV daemon must run on
-  the same host as the web server. TCP/IP daemon mode may be best for a
-  clustered web service. Executable mode is slowest but simplest.
+- Configure the module at /admin/config/media/cloudmersiveantivirus and set the API Key
 
+- Try uploading a file

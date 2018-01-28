@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\clamav;
+namespace Drupal\cloudmersiveantivirus;
 
 
 class Config  {
@@ -23,7 +23,7 @@ class Config  {
    * Load the config from Drupal's CMI.
    */
   public function __construct() {
-    $this->_config = \Drupal::config('clamav.settings');
+    $this->_config = \Drupal::config('cloudmersiveantivirus.settings');
   }
 
   // Global config options:

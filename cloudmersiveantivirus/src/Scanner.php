@@ -1,14 +1,14 @@
 <?php
 
-namespace Drupal\clamav;
+namespace Drupal\cloudmersiveantivirus;
 
 use Drupal\Core\File\FileSystem;
 use Drupal\Core\StreamWrapper\StreamWrapperInterface;
 use Drupal\file\FileInterface;
-use Drupal\clamav\Config;
+use Drupal\cloudmersiveantivirus\Config;
 
 /**
- * Service class for the ClamAV scanner instance.
+ * Service class for the CloudmersiveAntivirus scanner instance.
  *
  * Passes the methods "scan" and "version" to a specific handler, according to
  * the configuration.
@@ -36,9 +36,9 @@ class Scanner {
    * Constructor.
    *
    * @param object $config
-   *   An instance of \Drupal\clamav\Config.
+   *   An instance of \Drupal\cloudmersiveantivirus\Config.
    */
-  public function __construct(\Drupal\clamav\Config $config) {
+  public function __construct(\Drupal\cloudmersiveantivirus\Config $config) {
     $this->config = $config;
 
     switch ($config->scan_mode()) {
