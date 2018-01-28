@@ -1,8 +1,8 @@
-clamav.admin_display:
-  path: '/admin/config/media/clamav'
+cloudmersiveantivirus.admin_display:
+  path: '/admin/config/media/cloudmersiveantivirus'
   defaults:
-    _form: Drupal\clamav\Form\ClamAVConfigForm
-    # _controller: '\Drupal\clamav\Controller\ClamAVController::admin'
-    _title: 'ClamAV configuration'
+    _form: Drupal\cloudmersiveantivirus\Form\CloudmersiveAntivirusConfigForm
+    # _controller: '\Drupal\cloudmersiveantivirus\Controller\CloudmersiveAntivirusController::admin'
+    _title: 'Cloudmersive Antivirus configuration'
   requirements:
-    _permission: 'administer clamav'
+    _permission: 'administer cloudmersiveantivirus'

@@ -40,7 +40,7 @@ function cloudmersiveantivirus_requirements($phase) {
       );
     }
     else {
-      $requirements['clamav'] = array(
+      $requirements['cloudmersiveantivirus'] = array(
         'title' => t('CloudmersiveAntivirus version'),
         'value' => t('Unable to connect to CloudmersiveAntivirus service.'),
         'severity' => REQUIREMENT_ERROR,

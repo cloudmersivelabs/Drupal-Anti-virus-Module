@@ -1,8 +1,8 @@
 services:
-  clamav:
-    class: Drupal\clamav\Scanner
+  cloudmersiveantivirus:
+    class: Drupal\cloudmersiveantivirus\Scanner
     arguments:
-      - '@clamav_config'
+      - '@cloudmersiveantivirus_config'
 
-  clamav_config:
-    class: Drupal\clamav\Config
+  cloudmersiveantivirus_config:
+    class: Drupal\cloudmersiveantivirus\Config
